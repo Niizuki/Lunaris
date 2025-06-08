@@ -38,3 +38,14 @@ Dispatch strategy is your choice—Lunaris just connects the dots.
 ## Lunaris Core Mission
 To act as the intelligent middle layer that connects your intent with the application structure—improving code hygiene, reducing friction, and empowering scalable patterns.
 
+
+## Building
+
+The framework is provided as a standard .NET class library. To build the project
+run the following command from the repository root:
+
+```bash
+dotnet build src/Lunaris/Lunaris.csproj
+```
+
+This will compile the library and restore necessary dependencies.
