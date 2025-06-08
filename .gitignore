@@ -1,0 +1,7 @@
+bin/
+obj/
+*.deb
+/tests/Lunaris.Tests/bin/
+/tests/Lunaris.Tests/obj/
+/src/Lunaris/bin/
+/src/Lunaris/obj/
