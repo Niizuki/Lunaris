@@ -41,11 +41,14 @@ To act as the intelligent middle layer that connects your intent with the applic
 
 ## Building
 
-The framework is provided as a standard .NET class library. To build the project
+The framework is organised as several class libraries. To build all packages
 run the following command from the repository root:
 
 ```bash
-dotnet build src/Lunaris/Lunaris.csproj
+dotnet build src/Lunaris.Core/Lunaris.Core.csproj
+dotnet build src/Lunaris.Runtime/Lunaris.Runtime.csproj
 ```
 
-This will compile the library and restore necessary dependencies.
+This will compile the core and runtime libraries and restore necessary
+dependencies. Additional packages such as `Lunaris.Generation` or
+`Lunaris.Analyzers` can be built in the same manner.
