@@ -15,7 +15,8 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <ProjectReference Include="../../src/Lunaris/Lunaris.csproj" />
+    <ProjectReference Include="../../src/Lunaris.Core/Lunaris.Core.csproj" />
+    <ProjectReference Include="../../src/Lunaris.Runtime/Lunaris.Runtime.csproj" />
   </ItemGroup>
 
 </Project>
