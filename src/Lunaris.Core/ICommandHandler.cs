@@ -1,10 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lunaris
+namespace Lunaris;
+public interface ICommandHandler<TCommand>
 {
-    public interface ICommandHandler<TCommand>
-    {
-        Task HandleAsync(TCommand command, CancellationToken cancellationToken = default);
-    }
+    Task HandleAsync(TCommand command, CancellationToken cancellationToken = default);
 }
