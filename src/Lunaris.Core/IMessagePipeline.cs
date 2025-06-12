@@ -2,10 +2,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lunaris
+namespace Lunaris;
+public interface IMessagePipeline
 {
-    public interface IMessagePipeline
-    {
-        Task InvokeAsync(object message, Func<Task> next, CancellationToken cancellationToken = default);
-    }
+    Task InvokeAsync(object message, Func<Task> next, CancellationToken cancellationToken = default);
 }

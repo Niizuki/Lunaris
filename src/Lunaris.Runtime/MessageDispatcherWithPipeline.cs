@@ -5,39 +5,37 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Lunaris
+namespace Lunaris;
+public class MessageDispatcherWithPipeline
 {
-    public class MessageDispatcherWithPipeline
+    private readonly IServiceProvider _provider;
+    private readonly IEnumerable<IMessagePipeline> _pipelines;
+
+    public MessageDispatcherWithPipeline(IServiceProvider provider)
     {
-        private readonly IServiceProvider _provider;
-        private readonly IEnumerable<IMessagePipeline> _pipelines;
+        _provider = provider;
+        _pipelines = provider.GetServices<IMessagePipeline>();
+    }
 
-        public MessageDispatcherWithPipeline(IServiceProvider provider)
+    public async Task DispatchAsync<TCommand>(TCommand command, CancellationToken token = default)
+    {
+        var handler = _provider.GetRequiredService<ICommandHandler<TCommand>>();
+        var enumerator = _pipelines.GetEnumerator();
+        Task Handler() => handler.HandleAsync(command, token);
+
+        async Task Next()
         {
-            _provider = provider;
-            _pipelines = provider.GetServices<IMessagePipeline>();
-        }
-
-        public async Task DispatchAsync<TCommand>(TCommand command, CancellationToken token = default)
-        {
-            var handler = _provider.GetRequiredService<ICommandHandler<TCommand>>();
-            var enumerator = _pipelines.GetEnumerator();
-            Task Handler() => handler.HandleAsync(command, token);
-
-            async Task Next()
+            if (enumerator.MoveNext())
             {
-                if (enumerator.MoveNext())
-                {
-                    var current = enumerator.Current;
-                    await current.InvokeAsync(command!, Next, token);
-                }
-                else
-                {
-                    await Handler();
-                }
+                var current = enumerator.Current;
+                await current.InvokeAsync(command!, Next, token);
             }
-
-            await Next();
+            else
+            {
+                await Handler();
+            }
         }
+
+        await Next();
     }
 }
